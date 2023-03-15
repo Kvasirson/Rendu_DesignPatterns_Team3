@@ -11,28 +11,45 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     [SerializeField] private UnityEvent TakeDamageEvent;
 
-    private Action LooseLife;
-
     private void Reset()
     {
         _maxHealth = 100;
         _currentHealth = _maxHealth;
 
-        TakeDamageEvent.AddListener(UpdateLife);
+        TakeDamageEvent.AddListener(EffectHit);
     }
-    
-    public void TakeDamage(float damage)
+
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+            TakeDamage();
+    }
+
+    public float GetHealth => _currentHealth;
+    public float MaxHealth => _maxHealth;
+    
+    /// <summary>
+    /// Reduce health of Player and call event
+    /// </summary>
+    /// <param name="damage"></param>
+    public void TakeDamage(float damage = 10)
+    {
+        damage = MathF.Abs(damage);
+        
         _currentHealth -= damage;
         
         TakeDamageEvent.Invoke();
     }
 
-    private void UpdateLife()
+    /// <summary>
+    /// When Player takes damage call effect for hit or die
+    /// </summary>
+    public void EffectHit()
     {
-        LooseLife = _currentHealth <= 0 ? GetHitEffect : DieEffect;
-
-        LooseLife();
+        if (_currentHealth <= 0)
+            DieEffect();
+        else
+            GetHitEffect();
     }
 
     private void GetHitEffect()
@@ -43,5 +60,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     private void DieEffect()
     {
         
+    }
+    
+    public void Test()
+    {
+        Debug.Log("Test from PlayerHealth");
     }
 }
