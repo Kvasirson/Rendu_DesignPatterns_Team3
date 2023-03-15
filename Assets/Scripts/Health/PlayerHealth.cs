@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] private float _currentHealth;
 
     [SerializeField] private UnityEvent TakeDamageEvent;
+    [SerializeField] private GameObject _playerRender;
 
     private void Reset()
     {
@@ -52,18 +53,30 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             GetHitEffect();
     }
 
+    /// <summary>
+    /// Player render enable and disable for effect hit
+    /// </summary>
     private void GetHitEffect()
     {
+        if (!_playerRender)
+            return;
         
+        StartCoroutine(GetHit());
+        
+        IEnumerator GetHit()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                _playerRender.SetActive(false);
+                yield return new WaitForSeconds(0.1f);
+                _playerRender.SetActive(true);
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
     }
 
     private void DieEffect()
     {
         
-    }
-    
-    public void Test()
-    {
-        Debug.Log("Test from PlayerHealth");
     }
 }
