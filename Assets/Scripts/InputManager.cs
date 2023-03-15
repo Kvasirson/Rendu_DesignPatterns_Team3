@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
 {
     Controls _controls;
     [SerializeField] Vector2 _movementInput;
+    public Vector2 GetMovementInput(){ return _movementInput;}
     private float _verticalInput;
     private float _horizontalInput;
 
@@ -34,4 +35,5 @@ public class InputManager : MonoBehaviour
     { 
     
     }
+    
 }
