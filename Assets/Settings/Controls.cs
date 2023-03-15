@@ -44,6 +44,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""ded1430b-a607-4476-be91-ef830109464e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -75,7 +84,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -86,7 +95,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -97,7 +106,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -108,7 +117,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -167,6 +176,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33e635a3-e86f-4e6f-989f-aaec7535faab"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -194,6 +214,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_CursorPosition = m_Gameplay.FindAction("CursorPosition", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
+        m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -255,12 +276,14 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_CursorPosition;
     private readonly InputAction m_Gameplay_Movement;
+    private readonly InputAction m_Gameplay_Fire;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @CursorPosition => m_Wrapper.m_Gameplay_CursorPosition;
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
+        public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -276,6 +299,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
+                @Fire.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -286,6 +312,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
@@ -303,5 +332,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     {
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }
