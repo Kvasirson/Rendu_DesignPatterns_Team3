@@ -5,10 +5,20 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    private static InputManager _inputSystem;
+    public static InputManager InputSystem 
+    {
+        get => _inputSystem;
+    }
     Controls _controls;
     [SerializeField] Vector2 _movementInput;
     private float _verticalInput;
     private float _horizontalInput;
+    private bool _isShoot;
+    public bool IsShoot 
+    {
+        get => _isShoot;
+    }
 
     private void OnEnable()
     {
@@ -32,6 +42,6 @@ public class InputManager : MonoBehaviour
 
     private void HandleFireInput(CallbackContext ctx) 
     { 
-    
+        
     }
 }
