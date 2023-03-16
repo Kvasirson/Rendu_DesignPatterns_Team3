@@ -5,17 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EnnemyMovement))]
 [RequireComponent(typeof(EnnemyHealth))]
+[RequireComponent(typeof(EnnemyAggro))]
 public class EnnemyManager : MonoBehaviour
 {
     EnnemyMovement _ennemyMovement;
+    EnnemyAggro _ennemyAggro;
 
     private void Awake()
     {
         _ennemyMovement = GetComponent<EnnemyMovement>();
+        _ennemyAggro = GetComponent<EnnemyAggro>();
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        _ennemyMovement.HandleMovement();
+        _ennemyMovement.HandleAllMovement();
+    }
+    private void Update()
+    {
+        _ennemyAggro.LookForPlayer();
     }
 }
