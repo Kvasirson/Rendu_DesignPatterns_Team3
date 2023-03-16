@@ -11,14 +11,14 @@ public enum STATE
 }
 public class EnnemyMovement : MonoBehaviour
 {
-    private STATE state = STATE.NEUTRAL;
+    private STATE state = STATE.PATROL;
     public void setEnnemyState(STATE newState) { state = newState; }
 
     private Transform _player;
     private Transform _target;
     [SerializeField,Range(1,10)] private float _speed;
     [SerializeField] Transform _patern;
-    private List<Transform> _paternTargets;
+    private List<Transform> _paternTargets = new List<Transform>();
     Rigidbody2D _rigidbody;
     int Paternindex = 0;
 
@@ -30,7 +30,7 @@ public class EnnemyMovement : MonoBehaviour
     }
     private void LoadPatern()
     {
-        foreach (Transform t in _patern)
+        foreach(Transform t in _patern)
         {
             _paternTargets.Add(t);
         }
@@ -77,7 +77,8 @@ public class EnnemyMovement : MonoBehaviour
         Direction = _player.position - transform.position;
         Direction.Normalize();
         //_rigidbody.AddForce(Direction * _speed);
-        transform.Translate(Direction * _speed * 0.05f);
+        if(Vector2.Distance(transform.position, _player.position) > 1f)
+            transform.Translate(Direction * _speed * 0.05f);
     }
 
 
@@ -95,7 +96,7 @@ public class EnnemyMovement : MonoBehaviour
 
     private void SwitchPaternTarget()
     {
-        if(_target != _paternTargets[_paternTargets.Count-1])
+        if(Paternindex != _paternTargets.Count-1)
         {
             Paternindex++;
         }
@@ -105,5 +106,6 @@ public class EnnemyMovement : MonoBehaviour
         }
         _target = _paternTargets[Paternindex];
     }
+
 
 }

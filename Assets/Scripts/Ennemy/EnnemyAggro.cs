@@ -23,7 +23,10 @@ public class EnnemyAggro : MonoBehaviour
         Direction.Normalize();
         if (Vector2.Distance(transform.position, _playerTransform.position) < _zoneRadius)
         {
-            if (Physics2D.Raycast(transform.position, Direction, _zoneRadius, _layerMask))
+
+            Debug.DrawLine(transform.position, (Vector2)transform.position + Direction * _zoneRadius,Color.blue);
+
+            if (!Physics2D.Raycast(transform.position, Direction, _zoneRadius, _layerMask))
             {
                 _ennemyMovement.setEnnemyState(STATE.CHASE);
             }
@@ -32,13 +35,22 @@ public class EnnemyAggro : MonoBehaviour
                 _ennemyMovement.setEnnemyState(STATE.PATROL);
                 _ennemyMovement.FindClosestPaternTarget();
             }
-
+        }
+        else
+        {
+            _ennemyMovement.setEnnemyState(STATE.PATROL);
         }
     }
 
     private void ChangeZoneRadius(float newRadius)
     {
         _zoneRadius = newRadius;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _zoneRadius);
     }
 
 }

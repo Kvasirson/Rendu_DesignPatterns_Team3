@@ -19,10 +19,8 @@ public class EnnemyManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _ennemyMovement.HandleAllMovement();
-    }
-    private void Update()
-    {
         _ennemyAggro.LookForPlayer();
+        _ennemyMovement.HandleAllMovement();
+     
     }
 }
