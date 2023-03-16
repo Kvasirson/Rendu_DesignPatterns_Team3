@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Shoot() 
     {
-        GameObject _bulletObj = Instantiate(m_bulletObj, transform.position + new Vector3(0.0f,0.0f,-0.1f), transform.rotation);
-        _bulletObj.GetComponent<Rigidbody2D>().AddForce(new Vector2(10,0));
+        GameObject _bulletObj = Instantiate(m_bulletObj, transform.position + new Vector3(1.0f,0.0f,-0.1f), transform.rotation);
+        _bulletObj.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.1f,0));
     }
 }

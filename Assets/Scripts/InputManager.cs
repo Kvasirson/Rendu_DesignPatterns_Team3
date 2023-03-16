@@ -7,11 +7,13 @@ public class InputManager : MonoBehaviour
 {
     //private static InputManager _instance;
 
-    ////public static InputManager Instance
-    ////{
-    ////    get => _instance;
-    ////}
-    ///
+    //public static InputManager Instance
+    //{
+    //    get => _instance;
+    //}
+
+
+
     Controls _controls;
     [SerializeField] Vector2 _movementInput;
     private float _verticalInput;
