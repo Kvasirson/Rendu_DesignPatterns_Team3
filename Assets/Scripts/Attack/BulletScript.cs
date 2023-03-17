@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
 {
     CinemachineImpulseSource _impulseSource;
     public float damage;
+
     [SerializeField] private ParticleSystem _explosion;
     private float _lifeSpan = 3;
     public float lifeSpan
@@ -18,8 +19,9 @@ public class BulletScript : MonoBehaviour
 
     private float _timer = 0;
 
-    private void Start()
+    private void OnEnable()
     {
+        _timer = 0;
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
@@ -28,6 +30,7 @@ public class BulletScript : MonoBehaviour
         if (_timer > _lifeSpan) 
         {
             Death();
+            Debug.Log("Died Naturally");
         }
 
         _timer += Time.deltaTime;
@@ -37,11 +40,13 @@ public class BulletScript : MonoBehaviour
     {
         ParticleSystem part = Instantiate(_explosion, transform.position, Quaternion.identity);
         Destroy(part.gameObject, part.main.startLifetime.constant);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _impulseSource.GenerateImpulse();
         Death();
+        Debug.Log("I have hit something");
     }
 }

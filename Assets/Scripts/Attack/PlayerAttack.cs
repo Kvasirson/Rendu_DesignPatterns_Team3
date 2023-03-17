@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour
     private GameObject m_bulletObj;
     [SerializeField]
     private Transform m_aim;
+    [SerializeField]
+    private Pool m_bulletPool;
 
     private Transform _nozzleTransform;
     private InputManager _inputManager;
@@ -20,6 +22,8 @@ public class PlayerAttack : MonoBehaviour
     private float m_damage = 10f;
     [SerializeField]
     private float m_force = 10f;
+
+
 
     private void Start()
     {
