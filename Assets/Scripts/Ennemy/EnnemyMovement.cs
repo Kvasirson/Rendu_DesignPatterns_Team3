@@ -11,7 +11,7 @@ public enum STATE
 }
 public class EnnemyMovement : MonoBehaviour
 {
-    private STATE state = STATE.PATROL;
+    public STATE state = STATE.PATROL;
     public void setEnnemyState(STATE newState) { state = newState; }
 
     private Transform _player;
@@ -19,13 +19,13 @@ public class EnnemyMovement : MonoBehaviour
     [SerializeField,Range(1,10)] private float _speed;
     [SerializeField] Transform _patern;
     private List<Transform> _paternTargets = new List<Transform>();
-    Rigidbody2D _rigidbody;
+    private EnnemyAttack _ennemyAttack;
     int Paternindex = 0;
 
-    private void Start()
+    private void Awake()
     {
         _player = FindObjectOfType<PlayerManager>().transform;
-        _rigidbody = GetComponent<Rigidbody2D>();
+        _ennemyAttack = GetComponent<EnnemyAttack>();
         LoadPatern();
     }
 
@@ -75,6 +75,9 @@ public class EnnemyMovement : MonoBehaviour
         Direction.Normalize();
         //_rigidbody.AddForce(Direction * _speed);
         transform.Translate(Direction * _speed * 0.05f);
+
+        if (_ennemyAttack.enabled == true)
+            _ennemyAttack.enabled = false;
     }
 
     //Gere les mouvements lors de la chase
@@ -85,7 +88,21 @@ public class EnnemyMovement : MonoBehaviour
         Direction.Normalize();
         //_rigidbody.AddForce(Direction * _speed);
         if(Vector2.Distance(transform.position, _player.position) > 1f)
+        {
             transform.Translate(Direction * _speed * 0.05f);
+
+            if (_ennemyAttack.enabled == true)
+                _ennemyAttack.enabled = false;
+            
+        }
+        else if(_ennemyAttack.enabled != true)
+        {
+            _ennemyAttack.enabled = true;
+        }
+        
+
+
+
     }
 
     //Trouve le point de patrouille le plus proche

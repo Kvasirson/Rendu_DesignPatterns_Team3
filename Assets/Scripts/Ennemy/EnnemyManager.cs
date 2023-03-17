@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnnemyMovement))]
 [RequireComponent(typeof(EnnemyHealth))]
 [RequireComponent(typeof(EnnemyAggro))]
+[RequireComponent(typeof(EnnemyAttack))]
 public class EnnemyManager : MonoBehaviour
 {
     EnnemyMovement _ennemyMovement;
