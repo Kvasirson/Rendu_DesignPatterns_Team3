@@ -13,14 +13,15 @@ public class EnnemyManager : MonoBehaviour
 
     private void Awake()
     {
+        // init des components requis
         _ennemyMovement = GetComponent<EnnemyMovement>();
         _ennemyAggro = GetComponent<EnnemyAggro>();
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
+        //Appel des fonctions de base des components
         _ennemyAggro.LookForPlayer();
         _ennemyMovement.HandleAllMovement();
-     
     }
 }

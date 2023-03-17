@@ -28,6 +28,8 @@ public class EnnemyMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         LoadPatern();
     }
+
+    //Charge le chemin qu'il va suivre
     private void LoadPatern()
     {
         foreach(Transform t in _patern)
@@ -36,6 +38,8 @@ public class EnnemyMovement : MonoBehaviour
         }
         _target = _paternTargets[Paternindex];
     }
+
+    //Gere tout les mouvements de l'ennemi en fonction de son etat
     public void HandleAllMovement()
     {
         switch(state)
@@ -57,6 +61,8 @@ public class EnnemyMovement : MonoBehaviour
             break;
         }
     }
+
+    //Gere les mouvements lors de la patrouille
     private void HandlePatrolMovement()
     {
         Vector2 Direction = Vector2.zero;
@@ -71,6 +77,7 @@ public class EnnemyMovement : MonoBehaviour
         transform.Translate(Direction * _speed * 0.05f);
     }
 
+    //Gere les mouvements lors de la chase
     private void HandleChaseMovement()
     {
         Vector2 Direction = Vector2.zero;
@@ -81,7 +88,7 @@ public class EnnemyMovement : MonoBehaviour
             transform.Translate(Direction * _speed * 0.05f);
     }
 
-
+    //Trouve le point de patrouille le plus proche
     public void FindClosestPaternTarget()
     {
         float currentClosest = Vector2.Distance(_target.position, transform.position);
@@ -94,6 +101,7 @@ public class EnnemyMovement : MonoBehaviour
          } 
     }
 
+    //Change de target de patrouille quand il arrive près de la target precedente
     private void SwitchPaternTarget()
     {
         if(Paternindex != _paternTargets.Count-1)

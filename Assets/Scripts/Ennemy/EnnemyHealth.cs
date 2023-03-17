@@ -43,12 +43,12 @@ public class EnnemyHealth : MonoBehaviour, IDamagable
         damage = MathF.Abs(damage);
 
         _currentHealth -= damage;
-
+        
         TakeDamageEvent.Invoke();
     }
 
     /// <summary>
-    /// When Player takes damage call effect for hit or die
+    /// When Ennemy takes damage call effect for hit or die
     /// </summary>
     public void EffectHit()
     {
@@ -59,7 +59,7 @@ public class EnnemyHealth : MonoBehaviour, IDamagable
     }
 
     /// <summary>
-    /// Player render enable and disable for effect hit
+    /// Ennemy render enable and disable for effect hit
     /// </summary>
     private void GetHitEffect()
     {
@@ -82,7 +82,7 @@ public class EnnemyHealth : MonoBehaviour, IDamagable
 
     private void DieEffect()
     {
-
+        Destroy(gameObject);
     }
 
 }
