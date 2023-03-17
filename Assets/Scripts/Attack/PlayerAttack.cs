@@ -23,8 +23,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private float m_force = 10f;
 
-
-
     private void Start()
     {
         _inputManager = GetComponentInParent<InputManager>();
@@ -51,18 +49,24 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_inputManager.shootMode == InputManager.ShootMode.PISTOL)
         {
-            GameObject _bulletObj = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            GameObject _bulletObj = m_bulletPool.Get();
+            _bulletObj.transform.position = _nozzleTransform.position;
             Vector3 direction = m_aim.position - _bulletObj.transform.position;
-            
+
             _bulletObj.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
             _bulletObj.GetComponent<BulletScript>().lifeSpan = m_lifeSpan;
             _bulletObj.GetComponent<BulletScript>().damage = m_damage;
         }
         else if(_inputManager.shootMode == InputManager.ShootMode.SHOTGUN)
         {
-            GameObject _bulletObj1 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
-            GameObject _bulletObj2 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
-            GameObject _bulletObj3 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            GameObject _bulletObj1 = m_bulletPool.Get();
+            GameObject _bulletObj2 = m_bulletPool.Get();
+            GameObject _bulletObj3 = m_bulletPool.Get();
+
+            _bulletObj1.transform.position = _nozzleTransform.position;
+            _bulletObj2.transform.position = _nozzleTransform.position;
+            _bulletObj3.transform.position = _nozzleTransform.position;
+
             Vector3 direction = m_aim.position - _bulletObj1.transform.position;
             
             _bulletObj1.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;

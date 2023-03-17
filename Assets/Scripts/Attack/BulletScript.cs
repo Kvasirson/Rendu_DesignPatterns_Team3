@@ -22,6 +22,10 @@ public class BulletScript : MonoBehaviour
     private void OnEnable()
     {
         _timer = 0;
+        
+    }
+    private void Start()
+    {
         _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
