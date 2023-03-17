@@ -45,10 +45,37 @@ public class PlayerAttack : MonoBehaviour
 
     void Shoot() 
     {
-        GameObject _bulletObj = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
-        Vector3 direction = m_aim.position - _bulletObj.transform.position;
-        _bulletObj.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
-        _bulletObj.GetComponent<BulletScript>().lifeSpan = m_lifeSpan;
-        _bulletObj.GetComponent<BulletScript>().damage = m_damage;
+        if (_inputManager.shootMode == InputManager.ShootMode.PISTOL)
+        {
+            GameObject _bulletObj = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            Vector3 direction = m_aim.position - _bulletObj.transform.position;
+            
+            _bulletObj.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
+            _bulletObj.GetComponent<BulletScript>().lifeSpan = m_lifeSpan;
+            _bulletObj.GetComponent<BulletScript>().damage = m_damage;
+        }
+        else if(_inputManager.shootMode == InputManager.ShootMode.SHOTGUN)
+        {
+            GameObject _bulletObj1 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            GameObject _bulletObj2 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            GameObject _bulletObj3 = Instantiate(m_bulletObj, _nozzleTransform.position, Quaternion.identity);
+            Vector3 direction = m_aim.position - _bulletObj1.transform.position;
+            
+            _bulletObj1.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
+            _bulletObj1.GetComponent<BulletScript>().lifeSpan = m_lifeSpan / 3f;
+            _bulletObj1.GetComponent<BulletScript>().damage = m_damage;
+
+            direction = Quaternion.AngleAxis(10f, Vector3.forward) * direction;
+            
+            _bulletObj2.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
+            _bulletObj2.GetComponent<BulletScript>().lifeSpan = m_lifeSpan / 3f;
+            _bulletObj2.GetComponent<BulletScript>().damage = m_damage;
+            
+            direction = Quaternion.AngleAxis(-20f, Vector3.forward) * direction;
+
+            _bulletObj3.GetComponent<Rigidbody2D>().velocity = new Vector3(direction.x, direction.y).normalized * m_force;
+            _bulletObj3.GetComponent<BulletScript>().lifeSpan = m_lifeSpan / 3f;
+            _bulletObj3.GetComponent<BulletScript>().damage = m_damage;
+        }
     }
 }
