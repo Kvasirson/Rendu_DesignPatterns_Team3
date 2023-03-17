@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnnemyHealth : MonoBehaviour,IDamagable
+public class EnnemyHealth : MonoBehaviour, IDamagable
 {
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
@@ -22,8 +22,13 @@ public class EnnemyHealth : MonoBehaviour,IDamagable
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            TakeDamage();
+        //if (Input.GetKeyDown(KeyCode.A))
+            //TakeDamage();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        TakeDamage();
     }
 
     public float GetHealth => _currentHealth;
