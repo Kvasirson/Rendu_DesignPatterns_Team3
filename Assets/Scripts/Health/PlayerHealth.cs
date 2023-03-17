@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public void EffectHit()
     {
         if (_currentHealth <= 0)
-            DieEffect();
+            Dying();
         else
             GetHitEffect();
     }
@@ -75,8 +75,21 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         }
     }
 
+    /// <summary>
+    /// Make effect for die
+    /// </summary>
     private void DieEffect()
     {
         
+    }
+    
+    /// <summary>
+    /// Die effect and call Lose method from GameManager
+    /// </summary>
+    private void Dying()
+    {
+        DieEffect();
+        
+        GameManager.Instance.Lose();
     }
 }
