@@ -85,10 +85,12 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         //Interaction Range
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, m_interactionRange);
     }
+#endif
 }
