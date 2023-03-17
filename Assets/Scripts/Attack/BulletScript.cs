@@ -35,7 +35,7 @@ public class BulletScript : MonoBehaviour
     private void Death()
     {
         ParticleSystem part = Instantiate(_explosion, transform.position, Quaternion.identity);
-        Destroy(part, part.main.startLifetime.constant);
+        Destroy(part.gameObject, part.main.startLifetime.constant);
         Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D collision)
