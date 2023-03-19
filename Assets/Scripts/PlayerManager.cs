@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInjector))]
 public class PlayerManager : MonoBehaviour
 {
     InputManager _inputManager;

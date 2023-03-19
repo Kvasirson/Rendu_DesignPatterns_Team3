@@ -9,12 +9,12 @@ interface ISet<T>
 
 public class Reference<T> : ScriptableObject, ISet<T>
 {
-    private T reference;
+    private T _instance;
     
-    public T Value { get => reference; set => reference = value; }
+    public T Instance { get => _instance; set => _instance = value;}
     
     void ISet<T>.Set(T value)
     {
-        reference = value;
+        _instance = value;
     }
 }
