@@ -16,14 +16,8 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
 
     #endregion
 
-    private void Start()
+    private void Awake()
     {
-        //Renderer Safety
-        if (m_objectSpriteRenderer == null)
-        {          
-            m_objectSpriteRenderer = GetComponent<SpriteRenderer>(); ;
-        }
-
         //Set Object Display Image
         m_objectSpriteRenderer.sprite = m_equipementData.Sprite;
     }
@@ -46,5 +40,11 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
     public void OnRemove()
     {
         //Remove modifiers from player
+    }
+
+    void Reset()
+    {
+        //Set Renderer
+        m_objectSpriteRenderer = GetComponent<SpriteRenderer>(); ;
     }
 }
