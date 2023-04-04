@@ -14,12 +14,17 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
     [SerializeField, Required]
     SpriteRenderer m_objectSpriteRenderer;
 
+    GameObject _interactHighlight;
+
     #endregion
 
     private void Awake()
     {
         //Set Object Display Image
         m_objectSpriteRenderer.sprite = m_equipementData.Sprite;
+
+        _interactHighlight = Instantiate(new GameObject(), transform.position, transform.rotation, transform);
+        _interactHighlight.SetActive(false);
     }
 
     public void Interact()
@@ -29,7 +34,7 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
 
     public void Interactable(bool isInteractable)
     {
-        throw new System.NotImplementedException();
+        _interactHighlight.SetActive(isInteractable);
     }
 
     void OnPickup()
