@@ -1,18 +1,12 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 public class RoomController : MonoBehaviour
 {
     #region Variables
-
-    [SerializeField]
-    GameObject[] m_doors;
-
-    [SerializeField]
-    Collider2D m_roomTrigger;
 
     [SerializeField, Required]
     CameraController m_cameraController;
@@ -22,34 +16,16 @@ public class RoomController : MonoBehaviour
 
     bool _completed = false;
 
+    public event Action OnRoomLock;
+    public event Action OnRoomOpen;
     #endregion
 
-    private void Awake()
+    public void LockRoom()
     {
-        //Open room
-        foreach (GameObject door in m_doors)
-        {
-            door.SetActive(false);
-        }
-    }
+        if (_completed) return;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Player check
-
-        if (!_completed) //Already completed room check
-        {
-            LockRoom();
-        }
-    }
-
-    void LockRoom()
-    {
         //Close room
-        foreach (GameObject door in m_doors)
-        {
-            door.SetActive(true);
-        }
+        OnRoomLock?.Invoke();
 
         //Set camera for room
         m_cameraController.SetTarget(m_roomCamera.transform);
@@ -59,10 +35,7 @@ public class RoomController : MonoBehaviour
     public void UnlockRoom()
     {
         //Open room
-        foreach (GameObject door in m_doors)
-        {
-            door.SetActive(false);
-        }
+        OnRoomOpen?.Invoke();
 
         //Set room completion
         _completed = true;
@@ -70,12 +43,4 @@ public class RoomController : MonoBehaviour
         //Reset camera
         m_cameraController.ResetValues();
     }
-
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(m_roomTrigger.bounds.center, m_roomTrigger.bounds.size);
-    }
-#endif
 }
