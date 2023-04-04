@@ -39,10 +39,10 @@ public class DataReader : MonoBehaviour
     // TODO
     public List<int> GetTopPokemonByBasePower(int count)
         => GetPokemons().OrderByDescending(p => p.statbase.BasePower).Select(p => p.id).Take(count).ToList();
-
+    
     // TODO
     public List<int> GetDownPokemonByBasePower(int count)
-        => GetPokemons().OrderByDescending(p => -p.statbase.BasePower).Select(p => p.id).Take(count).ToList();
+        => GetPokemons().OrderBy(p => p.statbase.BasePower).Select(p => p.id).Take(count).ToList();
 
     // TODO
     public int GetPokemonPowerById(int id)
