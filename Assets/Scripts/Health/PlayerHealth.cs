@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
 
-    [SerializeField] private UnityEvent TakeDamageEvent;
+    [SerializeField] public UnityEvent TakeDamageEvent;
     [SerializeField] private GameObject _playerRender;
 
     private void Reset()
@@ -74,7 +74,6 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             }
         }
     }
-
     private void DieEffect()
     {
         

@@ -23,6 +23,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private float m_force = 10f;
 
+    [SerializeField]
+    private ParticleSystem _muzzleFlash;
     private void Start()
     {
         _inputManager = GetComponentInParent<InputManager>();
@@ -85,5 +87,7 @@ public class PlayerAttack : MonoBehaviour
             _bulletObj3.GetComponent<BulletScript>().lifeSpan = m_lifeSpan / 3f;
             _bulletObj3.GetComponent<BulletScript>().damage = m_damage;
         }
+
+        _muzzleFlash.Play();
     }
 }
