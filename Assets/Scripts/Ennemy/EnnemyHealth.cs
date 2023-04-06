@@ -33,7 +33,7 @@ public class EnnemyHealth : MonoBehaviour, IDamagable
     /// Reduce health of Player and call event
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage = 10)
+    public void TakeDamage(float damage)
     {
         damage = MathF.Abs(damage);
 

@@ -49,6 +49,11 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        EnnemyHealth _hp = collision.gameObject.GetComponent<EnnemyHealth>();
+        if (_hp)
+        {
+            _hp.TakeDamage(damage);
+        }
         _impulseSource.GenerateImpulse();
         Death();
         Debug.Log("I have hit something");
