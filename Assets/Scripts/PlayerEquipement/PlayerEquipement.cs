@@ -23,7 +23,14 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
         //Set Object Display Image
         m_objectSpriteRenderer.sprite = m_equipementData.Sprite;
 
+        //Set Highlight
         _interactHighlight = Instantiate(new GameObject(), transform.position, transform.rotation, transform);
+        SpriteRenderer HighlightRend = _interactHighlight.AddComponent<SpriteRenderer>();
+        HighlightRend.sprite = m_equipementData.Sprite;
+        HighlightRend.color = Color.white;
+        HighlightRend.rendererPriority = m_objectSpriteRenderer.rendererPriority - 1;
+        _interactHighlight.transform.localScale = Vector3.one * 1.1f;
+
         _interactHighlight.SetActive(false);
     }
 
