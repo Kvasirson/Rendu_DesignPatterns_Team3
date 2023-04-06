@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
             _controls.Enable();
         }
     }
+    public Vector2 GetInput() => _movementInput;
     public void HandleAllInputs()
     {
         HandleMovementInput();
