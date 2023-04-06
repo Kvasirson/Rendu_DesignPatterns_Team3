@@ -14,18 +14,24 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
     [SerializeField, Required]
     SpriteRenderer m_objectSpriteRenderer;
 
+    GameObject _interactHighlight;
+
     #endregion
 
-    private void Start()
+    private void Awake()
     {
-        //Renderer Safety
-        if (m_objectSpriteRenderer == null)
-        {          
-            m_objectSpriteRenderer = GetComponent<SpriteRenderer>(); ;
-        }
-
         //Set Object Display Image
         m_objectSpriteRenderer.sprite = m_equipementData.Sprite;
+
+        //Set Highlight
+        _interactHighlight = Instantiate(new GameObject(), transform.position, transform.rotation, transform);
+        SpriteRenderer HighlightRend = _interactHighlight.AddComponent<SpriteRenderer>();
+        HighlightRend.sprite = m_equipementData.Sprite;
+        HighlightRend.color = Color.white;
+        HighlightRend.rendererPriority = m_objectSpriteRenderer.rendererPriority - 1;
+        _interactHighlight.transform.localScale = Vector3.one * 1.1f;
+
+        _interactHighlight.SetActive(false);
     }
 
     public void Interact()
@@ -35,7 +41,7 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
 
     public void Interactable(bool isInteractable)
     {
-        throw new System.NotImplementedException();
+        _interactHighlight.SetActive(isInteractable);
     }
 
     void OnPickup()
@@ -46,5 +52,11 @@ public class PlayerEquipement : MonoBehaviour, IInteractable
     public void OnRemove()
     {
         //Remove modifiers from player
+    }
+
+    void Reset()
+    {
+        //Set Renderer
+        m_objectSpriteRenderer = GetComponent<SpriteRenderer>(); ;
     }
 }
