@@ -26,11 +26,6 @@ public class EnnemyHealth : MonoBehaviour, IDamagable
             //TakeDamage();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        TakeDamage();
-    }
-
     public float GetHealth => _currentHealth;
     public float MaxHealth => _maxHealth;
 

@@ -30,7 +30,7 @@ public class Pool : MonoBehaviour, IFactory
     {
         for (int i = 0; i < m_startupCount; i++)
         {
-            ObjectPool.Add(Instantiate(_prefab));
+            ObjectPool.Add(Instantiate(_prefab,transform));
             ObjectPool[i].SetActive(false);
         }
     }
