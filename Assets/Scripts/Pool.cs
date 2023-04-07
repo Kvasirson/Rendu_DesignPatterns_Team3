@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 interface IFactory 
 {
@@ -37,13 +38,17 @@ public class Pool : MonoBehaviour, IFactory
 
     public GameObject Get()
     {
-        _index += 1;
-        if (ObjectPool.Count <= _index) 
+        for (int i = 0; i < ObjectPool.Count; i++)
         {
-            _index = 0;
+            if (!ObjectPool[i].activeInHierarchy)
+            {
+                ObjectPool[i].SetActive(true);
+                return ObjectPool[i];
+            }
         }
-        ObjectPool[_index].SetActive(true);
-        return ObjectPool[_index];
+        GameObject PolledBullet = Instantiate(_prefab, transform);
+        ObjectPool.Add(PolledBullet);
+        return PolledBullet;
     }
 
     public void Release(GameObject gameobj)
@@ -51,18 +56,3 @@ public class Pool : MonoBehaviour, IFactory
         Destroy(gameobj);
     }
 }
-
-//class Spawner : MonoBehaviour, IFactory
-//{
-//    [SerializeField]
-//    private GameObject _prefab;
-//    public GameObject Get()
-//    {
-//        return Instantiate(_prefab);
-//    }
-
-//    public void Release(GameObject gameobj)
-//    {
-//        Destroy(gameobj);
-//    }
-//}
