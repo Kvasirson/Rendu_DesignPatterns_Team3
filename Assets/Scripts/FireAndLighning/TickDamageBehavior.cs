@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LighningGeneratorBehavior : MonoBehaviour
+public class TickDamageBehavior : MonoBehaviour
 {
     [SerializeField] private float _damage;
     [SerializeField] private float _tickSpeed;
@@ -12,7 +12,9 @@ public class LighningGeneratorBehavior : MonoBehaviour
     [SerializeField] private GameObject _capsule;
     private void Start()
     {
-        _capsule.SetActive(false);
+        if(_capsule)
+            _capsule.SetActive(false);
+
         _currenTickTime = _tickSpeed;
         hp = FindObjectOfType<PlayerHealth>();
     }
@@ -22,7 +24,9 @@ public class LighningGeneratorBehavior : MonoBehaviour
         if (!active)
             return;
 
-        _capsule.transform.position = hp.transform.position;
+        if(_capsule)
+            _capsule.transform.position = hp.transform.position;
+
         _currenTickTime += Time.deltaTime;
 
         if (_currenTickTime >= _tickSpeed)
@@ -37,14 +41,19 @@ public class LighningGeneratorBehavior : MonoBehaviour
         if (!collision.CompareTag("Player"))
             return;
 
-        _capsule.SetActive(true);
+        if(_capsule)
+            _capsule.SetActive(true);
+
         active = true;
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         _currenTickTime = _tickSpeed;
-        _capsule.SetActive(false);
+
+        if(_capsule)
+            _capsule.SetActive(false);
         active = false;
+
     }
 }
