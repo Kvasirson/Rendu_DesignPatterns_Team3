@@ -52,7 +52,7 @@ public class FireBallSpawner : MonoBehaviour, IFactory
 
     public void Release(GameObject gameobj)
     {
-        Destroy(gameobj);
+        gameobj.SetActive(false);
     }
     #endregion
 

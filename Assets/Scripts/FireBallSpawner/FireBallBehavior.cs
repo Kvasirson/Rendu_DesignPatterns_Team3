@@ -34,7 +34,6 @@ public class FireBallBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         PlayerHealth _hp = collision.gameObject.GetComponent<PlayerHealth>();
         if (_hp)
         {
