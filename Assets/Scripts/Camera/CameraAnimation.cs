@@ -11,11 +11,14 @@ public class CameraAnimation : MonoBehaviour
     Vignette m_Vignette;
     [SerializeField] private float speed;
     [SerializeField] private float Intensity;
+    [SerializeField] private PlayerReference _playerReference;
+    
     private void Start()
     {
         volume = Camera.main.GetComponent<Volume>();
         volume.profile.TryGet(out m_Vignette);
-        FindObjectOfType<PlayerHealth>().TakeDamageEvent.AddListener(TriggerAnim);
+        
+        _playerReference.Instance.GetComponent<PlayerHealth>().TakeDamageEvent.AddListener(TriggerAnim);
     }
 
     public void TriggerAnim()

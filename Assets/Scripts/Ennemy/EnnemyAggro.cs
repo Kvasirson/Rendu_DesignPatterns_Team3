@@ -9,11 +9,14 @@ public class EnnemyAggro : MonoBehaviour
     [SerializeField]LayerMask _layerMask;
     EnnemyMovement _ennemyMovement;
     private Transform _playerTransform;
+    [SerializeField] private PlayerReference _playerReferences;
+    
     // Start is called before the first frame update
     void Start()
     {
         _ennemyMovement = GetComponent<EnnemyMovement>();
-        _playerTransform = FindObjectOfType<PlayerManager>().transform;
+        _playerTransform = _playerReferences.Instance.gameObject.transform;
+        
         ChangeZoneRadius(_zoneRadius);
     }
 

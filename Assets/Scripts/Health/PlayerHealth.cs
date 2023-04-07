@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
 
-    [SerializeField] public UnityEvent TakeDamageEvent;
+    public UnityEvent TakeDamageEvent;
     [SerializeField] private GameObject _playerRender;
 
     private void Reset()
@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         TakeDamageEvent.AddListener(EffectHit);
     }
+    
 
     private void Update()
     {
@@ -38,7 +39,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         
         _currentHealth -= damage;
         
-        TakeDamageEvent.Invoke();
+        TakeDamageEvent?.Invoke();
     }
 
     /// <summary>

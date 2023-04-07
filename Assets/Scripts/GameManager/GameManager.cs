@@ -21,11 +21,11 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        WinEvent.Invoke();
+        WinEvent?.Invoke();
     }
     
     public void Lose()
     {
-        LoseEvent.Invoke();
+        LoseEvent?.Invoke();
     }
 }
