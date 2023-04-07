@@ -11,9 +11,9 @@ public class FireBallSpawner : MonoBehaviour, IFactory
     [SerializeField]
     private float m_startupCount;
 
-    [SerializeField]
-    private int _index = 0;
 
+    [SerializeField]
+    private float damage; 
     [SerializeField] private float _timeBtwShots;
     private float _currentTime = 0;
     [SerializeField] private float _angleIncrement;
@@ -36,13 +36,18 @@ public class FireBallSpawner : MonoBehaviour, IFactory
 
     public GameObject Get()
     {
-        _index += 1;
-        if (ObjectPool.Count <= _index)
+
+        for(int i = 0; i< ObjectPool.Count; i++)
         {
-            _index = 0;
+            if (!ObjectPool[i].activeInHierarchy)
+            {
+                ObjectPool[i].SetActive(true);
+                return ObjectPool[i];
+            }
         }
-        ObjectPool[_index].SetActive(true);
-        return ObjectPool[_index];
+        GameObject PooledBullet =  Instantiate(_prefab, transform);
+        ObjectPool.Add(PooledBullet);
+        return PooledBullet;
     }
 
     public void Release(GameObject gameobj)
@@ -70,21 +75,21 @@ public class FireBallSpawner : MonoBehaviour, IFactory
         GameObject _bulletObj1 = Get();
         _bulletObj1.transform.position = transform.localPosition;
         Vector2 direction1 = Quaternion.AngleAxis(_currentAngle, Vector3.forward) * Vector2.right;
-        _bulletObj1.GetComponent<FireBallBehavior>().InitFireBall(direction1, _FireBall_Speed);
+        _bulletObj1.GetComponent<FireBallBehavior>().InitFireBall(direction1, _FireBall_Speed, damage);
 
         GameObject _bulletObj2 = Get();
         _bulletObj2.transform.position = transform.localPosition;
         Vector2 direction2 = Quaternion.AngleAxis(_currentAngle, Vector3.forward) * -Vector2.right;
-        _bulletObj2.GetComponent<FireBallBehavior>().InitFireBall(direction2, _FireBall_Speed);
+        _bulletObj2.GetComponent<FireBallBehavior>().InitFireBall(direction2, _FireBall_Speed, damage);
 
         GameObject _bulletObj3 = Get();
         _bulletObj3.transform.position = transform.localPosition;
         Vector2 direction3 = Quaternion.AngleAxis(_currentAngle, Vector3.forward) * Vector2.up;
-        _bulletObj3.GetComponent<FireBallBehavior>().InitFireBall(direction3, _FireBall_Speed);
+        _bulletObj3.GetComponent<FireBallBehavior>().InitFireBall(direction3, _FireBall_Speed, damage);
 
         GameObject _bulletObj4 = Get();
         _bulletObj4.transform.position = transform.localPosition;
         Vector2 direction4 = Quaternion.AngleAxis(_currentAngle, Vector3.forward) * -Vector2.up;
-        _bulletObj4.GetComponent<FireBallBehavior>().InitFireBall(direction4, _FireBall_Speed);
+        _bulletObj4.GetComponent<FireBallBehavior>().InitFireBall(direction4, _FireBall_Speed, damage);
     }
 }

@@ -7,18 +7,24 @@ public class FireBallBehavior : MonoBehaviour
     private Vector2 _direction;
     private float _speed;
     private float _damage;
-    private ParticleSystem _ExplosionparticleSystem;
-    private SpriteRenderer _sr;
-    public void InitFireBall(Vector2 direction, float speed)
+    [SerializeField] private ParticleSystem _TrailParticleSystem;
+    [SerializeField] private ParticleSystem _ExplosionparticleSystem;
+    [SerializeField] private SpriteRenderer _sr;
+    private Animator _animator;
+    public void InitFireBall(Vector2 direction, float speed,float damage)
     {
+        _animator.Play("Idle");
+        _sr.enabled = true;
+        _TrailParticleSystem.Play();
+        _ExplosionparticleSystem.Stop();
         _direction = direction;
         _speed = speed;
+        _damage = damage;
     }
 
-    private void Start()
+    private void Awake()
     {
-        _ExplosionparticleSystem = GetComponent<ParticleSystem>();
-        _sr = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -28,12 +34,13 @@ public class FireBallBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.name);
         PlayerHealth _hp = collision.gameObject.GetComponent<PlayerHealth>();
         if (_hp)
         {
             _hp.TakeDamage(_damage);
         }
-        Death();
+        StartCoroutine(explosion());
     }
     private void Death()
     {
@@ -42,7 +49,10 @@ public class FireBallBehavior : MonoBehaviour
 
     IEnumerator explosion()
     {
-        _sr.enabled = true;
+        _animator.Play("lightsOut");
+        _speed = 0;
+        _TrailParticleSystem.Stop();
+        _sr.enabled = false;
         _ExplosionparticleSystem.Play();
         yield return new WaitForSeconds(1);
         Death();
